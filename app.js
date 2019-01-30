@@ -5,10 +5,14 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var ejsLayouts = require("express-ejs-layouts");
 var favicon = require('serve-favicon');
+var mongoose = require('mongoose');
+var session = require('express-session');
 
 var indexRouter = require('./routes/index');
 
 var app = express();
+
+mongoose.connect('mongodb://localhost:27017/shopping', {useNewUrlParser: true});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -17,6 +21,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({secret: "fnoiewbgfiea;nhfiuifsfnosaflfl;0324iuof;sdf", resave: false, saveUninitialized: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname,'public','images','favicon.ico')));
 

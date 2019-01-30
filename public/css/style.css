@@ -1,8 +1,7 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+.card-img-top{
+  height: 250px;
 }
 
-a {
-  color: #00B7FF;
+.card {
+  margin: 20px;
 }
