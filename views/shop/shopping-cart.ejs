@@ -1,0 +1,34 @@
+<% if (products){ %>
+<div class="row">
+  <div class="col-md-6 col-lg-6 offset-md-3 offset-sm-3">
+    <ul class="list-group">  <% products.forEach(function(product){%>
+      <li class="list-group-item">
+        <strong><%= product.item.title %>: </strong> <span class="badge badge-info"><%= product.qty %></span>
+        <span class="badge badge-success"><%= product.price %> PLN</span>
+        <div class="btn-group">
+          <button class="badge btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown">Opcje <span
+              class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+              <li><a href="/reduce/<%= product.item._id %>">Zmniejsz ilość o 1</a></li>
+              <li><a href="/remove/<%= product.item._id %>">Usuń wszystkie</a></li>
+          </ul>
+        </div>
+    </li><% }); %></ul>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 col-lg-6 offset-md-3 offset-sm-3"> <strong>Suma: <%= totalPrice %></strong>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-md-6 col-lg-6 offset-md-3 offset-sm-3"> <a href="/checkout" type="button" class="btn btn-success">Zamów</a>
+  </div>
+</div><% } else { %>
+<div class="row">
+  <div class="col-md-6 col-lg-6 offset-md-3 offset-sm-3">
+    <h2>Brak obiektów w koszyku</h2>
+  </div>
+</div>
+<% }; %>

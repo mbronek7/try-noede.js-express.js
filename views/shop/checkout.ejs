@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-md-6 col-lg-4 offset-md-4 offset-sm-3">
+    <h1>Zamówienie</h1>
+    <h4>Suma:
+      <%= total %>
+    </h4>
+    <div id="charge-error" class=<% if (noError) {%>
+      <%= "hidden" %>
+      <% } else {%>
+      <%= "alert alert-danger" %>
+      <% } %>
+      <%= errMsg %>
+    </div>
+    <form action="/checkout" method="post" id="checkout-form">
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label for="name">Nazwa Odbiorcy</label>
+            <input type="text" id="name" class="form-control" required name="name">
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label for="address">Adres</label>
+            <input type="text" id="address" class="form-control" required name="address">
+          </div>
+        </div>
+        <hr>
+      </div>
+      <button type="submit" class="btn btn-success">Kup Teraz</button>
+    </form>
+  </div>
+</div>
