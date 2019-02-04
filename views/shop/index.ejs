@@ -1,3 +1,14 @@
+<br>
+<form action="/search" method="post" id="search-form">
+  <div class="input-group col-md-4">
+    <input class="form-control py-2 border-right-0 border" type="text" placeholder="szukaj" name="search" id="search">
+    <span class="input-group-append">
+      <button class="btn btn-outline-secondary border-left-0 border" type="submit">
+        <i class="fa fa-search"></i>
+      </button>
+    </span>
+  </div>
+</form>
 <% products.forEach(function(productChunk){ %>
 <div class="row">
   <% productChunk.forEach(function(product){%>

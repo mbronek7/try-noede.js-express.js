@@ -33,6 +33,26 @@ router.get('/add-to-cart/:id', function (req, res, next) {
   });
 });
 
+router.post('/search', function (req, res, next) {
+  var searchText = req.body.search;
+  Product.find({
+    $text: {
+      $search: searchText
+    }
+  }).then(function (value) {
+    var productsChunk = [];
+    var chunkSize = 3;
+    for (var i = 0; i < value.length; i += chunkSize) {
+      productsChunk.push(value.slice(i, i + chunkSize));
+    }
+    res.render('shop/index', {
+      products: productsChunk
+    });
+  }).catch(function(e){
+    res.redirect('/');
+  });
+});
+
 router.get('/shopping-cart', function (req, res, next) {
   if (!req.session.cart) {
     return res.render('shop/shopping-cart', {
@@ -46,7 +66,7 @@ router.get('/shopping-cart', function (req, res, next) {
   });
 });
 
-router.get('/reduce/:id', function(req, res, next) {
+router.get('/reduce/:id', function (req, res, next) {
   var productId = req.params.id;
   var cart = new Cart(req.session.cart ? req.session.cart : {});
 
@@ -55,7 +75,7 @@ router.get('/reduce/:id', function(req, res, next) {
   res.redirect('/shopping-cart');
 });
 
-router.get('/remove/:id', function(req, res, next) {
+router.get('/remove/:id', function (req, res, next) {
   var productId = req.params.id;
   var cart = new Cart(req.session.cart ? req.session.cart : {});
 
