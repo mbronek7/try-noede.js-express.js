@@ -40,6 +40,9 @@ router.post('/search', function (req, res, next) {
       $search: searchText
     }
   }).then(function (value) {
+    if (value.length < 1) {
+      res.redirect('/');
+    }
     var productsChunk = [];
     var chunkSize = 3;
     for (var i = 0; i < value.length; i += chunkSize) {
@@ -48,7 +51,7 @@ router.post('/search', function (req, res, next) {
     res.render('shop/index', {
       products: productsChunk
     });
-  }).catch(function(e){
+  }).catch(function (e) {
     res.redirect('/');
   });
 });
