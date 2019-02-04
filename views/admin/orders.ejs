@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-lg-8 offset-md-2">
+    <h1>Zamówienia</h1>
+    <% orders.forEach(function(order){%>
+    <div class="card">
+      <div class="card-body">
+        <ul class="list-group">
+          <% [order.cart.items].forEach(function(item){%>
+          <% Object.keys(item).forEach(function(key) { %>
+          <li class="list-group-item"> <span class="badge">
+              <% console.log(order.name) %>
+              <%= item[key].item.price %></span>
+            <%= item[key].item.title %> | Ilość:
+            <%= item[key].qty %>
+          </li>
+          <% });%>
+          <% }); %>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <strong>Suma Zamówienia:
+          <%= order.cart.totalPrice %></strong><br>
+        <strong>Nazwa Odbiorcy:
+          <%= order.name %></strong><br>
+        <strong>Adres:
+          <%= order.address %></strong>
+      </div>
+    </div>
+    <% }); %>
+  </div>
+</div>

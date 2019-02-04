@@ -1,0 +1,18 @@
+<br>
+
+<% users.forEach(function(usersChunk){ %>
+<div class="row">
+  <% usersChunk.forEach(function(user){%>
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">
+        <%= user.email %>
+      </h5>
+      <p class="card-text">
+        Jest Administratorem: <%= user.isAdmin %>
+      </p>
+    </div>
+  </div>
+  <% }); %>
+</div>
+<% }); %>
