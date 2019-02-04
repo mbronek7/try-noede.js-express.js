@@ -48,6 +48,7 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 app.use(function (req, res, next) {
   res.locals.login = req.isAuthenticated();
   res.locals.session = req.session;
+  res.locals.user = req.user;
   next();
 });
 

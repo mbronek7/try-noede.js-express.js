@@ -13,6 +13,32 @@ var parseForm = bodyParser.urlencoded({
 
 var Cart = require('../models/cart');
 var Order = require('../models/order');
+var User = require('../models/user');
+
+router.get('/admin', requiresAdmin, function (req, res, next) {
+  res.render('admin/panel');
+});
+
+router.get('/admin/users-index', requiresAdmin, function (req, res, next) {
+  User.find(function (err, docs) {
+    var usersChunk = [];
+    var chunkSize = 3;
+    for (var i = 0; i < docs.length; i += chunkSize) {
+      usersChunk.push(docs.slice(i, i + chunkSize));
+    }
+    res.render('admin/users-index', {
+      users: usersChunk
+    });
+  });
+});
+
+router.get('/admin/orders', requiresAdmin, function (req, res, next) {
+  Order.find(function (err, docs) {
+    res.render('admin/orders', {
+      orders: docs
+    });
+  });
+});
 
 router.get('/profile', isLoggedIn, function (req, res, next) {
   Order.find({
@@ -52,7 +78,7 @@ router.get('/signup', csrfProtection, function (req, res, next) {
 });
 
 router.post('/signup', parseForm, csrfProtection, passport.authenticate('local-signup', {
-  successRedirect: '/profile',
+  successRedirect: '/user/profile',
   failureRedirect: '/signup',
   failureFlash: true
 }));
@@ -76,6 +102,7 @@ module.exports = router;
 
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
+    console.log(req.user);
     return next();
   }
   res.redirect('/');
@@ -86,4 +113,13 @@ function notLoggedIn(req, res, next) {
     return next();
   }
   res.redirect('/');
+};
+
+function requiresAdmin(req, res, next) {
+  if (req.isAuthenticated()) {
+    if (req.user && req.user.isAdmin === true)
+      next();
+    else
+      res.send(401, 'Unauthorized');
+  }
 };
